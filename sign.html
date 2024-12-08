@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+</head>
+<body>
+    <form id="login-form">
+        <table>
+            <tr>
+                <td>
+                    Username:
+                </td>
+                <td>
+                    <input type="text" name="username" id="txt_username" placeholder="username" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password: 
+                </td>
+                <td>
+                    <input type="password" name="password" id="txt_password" placeholder="password" required>
+                </td>
+            </tr>
+        </table>
+        
+        <button type="button" onclick="signUp()">Sign Up</button>
+        <button type="button" onclick="logIn()">Log In</button>
+    </form>
+
+    <script>
+        // Function to handle sign-up
+        function signUp() {
+            const user = document.getElementById("txt_username").value;
+            const pass = document.getElementById("txt_password").value;           
+
+            if (user && pass !== "") {
+                alert("Signing up with username: " + user + " and password: " + pass);
+                const data = JSON.parse(localStorage.getItem('data')) || [];
+                // Check if the username already exists
+                if (data.some(userData => userData.username === user)) {
+                    alert("Username already exists! Please log in.");
+                } else {
+                    data.push({
+                        username: user,
+                        password: pass
+                    });
+                    localStorage.setItem('data', JSON.stringify(data));
+                    alert("Sign-up successful!");
+                }
+            } else {
+                alert("Please fill in both fields!");
+            }
+        }
+
+        // Function to handle log-in
+        function logIn() {
+            const user = document.getElementById("txt_username").value;
+            const pass = document.getElementById("txt_password").value;           
+
+            if (user && pass !== "") {
+                const data = JSON.parse(localStorage.getItem('data')) || [];
+                const userData = data.find(userData => userData.username === user && userData.password === pass);
+
+                if (userData) {
+                    alert("Wow, ang galing!, " + user + "!");
+                } else {
+                    alert("Saktuha, pogi!!");
+                }
+            } else {
+                alert("Butangiii!");
+            }
+        }
+    </script>
+</body>
+</html>
